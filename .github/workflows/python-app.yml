@@ -1,0 +1,35 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+# 한국 11시면 cron에 11-9=2로 표현
+# 40분이라 걸어놓음 10분 후 쯤에 옴
+
+name: Python application
+
+on:
+  schedule:
+    - cron : '* 13 * * *'
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+ 
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install python-telegram-bot requests beautifulsoup4
+    - name: 파이썬 봇 돌릴꺼
+      run: |
+        python s11_telegramBot.py
